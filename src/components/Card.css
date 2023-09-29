@@ -1,0 +1,26 @@
+.card {
+    opacity: 0.8;
+    width: 250px;         /* Width of the card */
+    height: 150px;        /* Height of the card */
+    margin: 20px auto;    /* Center the card with some spacing around */
+    padding: 20px;        /* Some internal spacing for content */
+    background-color: #fff;  /* White background */
+    border-radius: 15px;  /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);  /* A slight shadow for a raised effect */
+    cursor: pointer;      /* Change cursor to pointer on hover */
+    transition: transform 0.2s, box-shadow 0.2s;  /* Smooth transition for hover effect */
+    text-align: center;   /* Center the text/content */
+    font-size: 18px;      /* Text size */
+    display: flex;        /* Using flexbox to center content both horizontally and vertically */
+    align-items: center;  /* Vertically align content in the center */
+    justify-content: center; /* Horizontally align content in the center */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Move the card slightly upwards on hover */
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);  /* Increase the shadow a bit on hover */
+}
+
+button {
+    opacity: 0.8;
+}
