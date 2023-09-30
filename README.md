@@ -30,7 +30,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-<img src='Kapture 2023-09-29 at 17.27.11.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Kapture 2023-09-30 at 02.21.08.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 GIF created with ...  
