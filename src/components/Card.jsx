@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Card.css"
 
 const Card = () => {
-    let dictionary = {
+        let dictionary = {
         'What does the NFL stand for?': 'National Football League',
         'Who is the current commissioner of the NFL?': 'Roger Goodell',
         'Who has kicked the longest field goal successfully of all time?': 'Justin Tucker',
@@ -16,59 +16,83 @@ const Card = () => {
         'Who has the longest interception return in the NFL?': 'Ed Reed',
       };
 
-      let randomIndex = Math.floor(Math.random() * Object.keys(dictionary).length);
-      let randomQuestion = Object.keys(dictionary)[randomIndex];
-      let answer = dictionary[randomQuestion];
-    
-      const [start, started] = useState(false);
-      const [questionDisplayed, changeQuestion] = useState(randomQuestion);
-      const [answerDisplayed, changeAnswer] = useState(answer);
-      const [display, changeDisplay] = useState(questionDisplayed);
+    const totalQuestions = Object.keys(dictionary).length;
 
-      const handleChangeCard = () => {
-        let newIndex = Math.floor(
-            Math.random() * Object.keys(dictionary).length
-        );
-        let newQuestion = Object.keys(dictionary)[newIndex];
-        let newAnswer = dictionary[newQuestion];
-        changeQuestion(newQuestion);
-        changeAnswer(newAnswer);
-        changeDisplay(newQuestion);
-      }
+    const [randomIndex, setRandomIndex] = useState(Math.floor(Math.random() * totalQuestions));
+    const [start, setStart] = useState(false);
+    const [displayQuestion, setDisplayQuestion] = useState(true);
+    const [userGuess, setUserGuess] = useState('');
+    const [feedback, setFeedback] = useState(null);
 
-      const handleCardFlip = () => {
-        if(display === questionDisplayed) {
-            changeDisplay(answerDisplayed)
+    const currentQuestion = Object.keys(dictionary)[randomIndex];
+    const currentAnswer = dictionary[currentQuestion];
+
+    const nextCard = () => {
+        setRandomIndex((randomIndex + 1) % totalQuestions);
+        setDisplayQuestion(true);
+        setFeedback(null);
+        setUserGuess('');
+    }
+
+    const prevCard = () => {
+        setRandomIndex((randomIndex - 1 + totalQuestions) % totalQuestions);
+        setDisplayQuestion(true);
+        setFeedback(null);
+        setUserGuess('');
+    }
+
+    const handleCardFlip = () => {
+        setDisplayQuestion(!displayQuestion);
+    }
+
+    const handleGuessSubmit = () => {
+        if (userGuess.toLowerCase() === currentAnswer.toLowerCase()) {
+            setFeedback("Correct!");
         } else {
-            changeDisplay(questionDisplayed)
+            setFeedback("Incorrect. Try again.");
         }
-      }
+    }
 
-      const startGame = () => {
-        if(start === false) {
-            return(
-                <>
+    if (!start) {
+        return (
+            <>
                 <div className="card">
-                    Start!
+                    BEGIN GAME
                 </div>
-                <button onClick = {() =>  started(true)}>
-                    Begin Game!
-                </button></>
-            );
-        } else {
-            return(
-                <>
-                <div className="card" onClick = {handleCardFlip}>
-                    {display}
-                </div>
-                <button onClick = {handleChangeCard}>
-                    Next!
-                </button></>
-            );
-        }
-      }
+                <label htmlFor="guess">Guess an answer:</label>
+                <input
+                    id="guess"
+                    value={userGuess}
+                    onChange={e => setUserGuess(e.target.value)}
+                />
+                <button className="controls" onClick={() => setStart(true)}>Next</button>
+                <button onClick={() => {}}>Submit</button>
+            </>
+        );
+    }
 
-      return startGame();
+    return (
+        <>
+            <div className="card" onClick={handleCardFlip}>
+                {displayQuestion ? currentQuestion : currentAnswer}
+            </div>
+            
+            <label htmlFor="guess">Your Guess:</label>
+            <input
+                id="guess"
+                value={userGuess}
+                onChange={e => setUserGuess(e.target.value)}
+                placeholder="Enter your guess..."
+            />
+            <button onClick={handleGuessSubmit}>Submit Guess</button>
+            {feedback && <p>{feedback}</p>}
+            
+            <div>
+                <button className="controls" onClick={prevCard}>Previous</button>
+                <button className="controls" onClick={nextCard}>Next</button>
+            </div>
+        </>
+    );
 }
 
 export default Card;

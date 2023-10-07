@@ -24,3 +24,12 @@
 button {
     opacity: 0.8;
 }
+
+label {
+    color: white;
+}
+
+.controls{
+    position: relative;
+    top: 5rem;
+}
